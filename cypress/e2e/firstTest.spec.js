@@ -148,6 +148,29 @@ describe('First test suite', () => {
     })
 
     it.only('datepicker', () => {
+
+        function selectDayFromCurrent(){
+
+            // Using javascript date object
+            let date = new Date()
+            date.setDate(date.getDate() + 4)
+            console.log(date)
+            let futureDay = date.getDate()
+            let futureMonth = date.toLocaleDateString('en-US', {month: 'short'})
+            let futureYear = date.getFullYear()
+            let dateToAssert = `${futureMonth} ${futureDay}, ${futureYear}`
+
+            cy.get('nb-calendar-navigation').invoke('attr', 'ng-reflect-date').then(dateAttribute => {
+                if(!dateAttribute.includes(futureMonth) || !dateAttribute.includes(futureYear)){
+                    cy.get('[data-name="chevron-right"]').click()
+                    selectDayFromCurrent()
+                } else {
+                    cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
+                }
+            })
+            return dateToAssert
+        }
+
         cy.visit('/')
         cy.contains('Forms').click()
         cy.contains('Datepicker').click()
@@ -159,29 +182,9 @@ describe('First test suite', () => {
             // or
             cy.wrap(input).should('have.value', 'Jun 28, 2024')
 
-            // Using javascript date object
-            let date = new Date()
-            date.setDate(date.getDate() + 4)
-            console.log(date)
-            let futureDay = date.getDate()
-            let futureMonth = date.toLocaleDateString('en-US', {month: 'short'})
-            let futureYear = date.getFullYear()
-            let dateToAssert = `${futureMonth} ${futureDay}, ${futureYear}`
-
             cy.wrap(input).click()
 
-            function selectDayFromCurrent(){
-                cy.get('nb-calendar-navigation').invoke('attr', 'ng-reflect-date').then(dateAttribute => {
-                    if(!dateAttribute.includes(futureMonth) || !dateAttribute.includes(futureYear)){
-                        cy.get('[data-name="chevron-right"]').click()
-                        selectDayFromCurrent()
-                    } else {
-                        cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
-                    }
-                })
-            }
-            
-            selectDayFromCurrent()
+            const dateToAssert = selectDayFromCurrent()
             cy.wrap(input).invoke('prop', 'value').should('contain', dateToAssert)
             // or
             cy.wrap(input).should('have.value', dateToAssert)
