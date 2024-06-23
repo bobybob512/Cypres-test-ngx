@@ -149,11 +149,11 @@ describe('First test suite', () => {
 
     it.only('datepicker', () => {
 
-        function selectDayFromCurrent(){
+        function selectDayFromCurrent(day){
 
             // Using javascript date object
             let date = new Date()
-            date.setDate(date.getDate() + 4)
+            date.setDate(date.getDate() + day)
             console.log(date)
             let futureDay = date.getDate()
             let futureMonth = date.toLocaleDateString('en-US', {month: 'short'})
@@ -163,7 +163,7 @@ describe('First test suite', () => {
             cy.get('nb-calendar-navigation').invoke('attr', 'ng-reflect-date').then(dateAttribute => {
                 if(!dateAttribute.includes(futureMonth) || !dateAttribute.includes(futureYear)){
                     cy.get('[data-name="chevron-right"]').click()
-                    selectDayFromCurrent()
+                    selectDayFromCurrent(day)
                 } else {
                     cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
                 }
@@ -184,7 +184,7 @@ describe('First test suite', () => {
 
             cy.wrap(input).click()
 
-            const dateToAssert = selectDayFromCurrent()
+            const dateToAssert = selectDayFromCurrent(300)
             cy.wrap(input).invoke('prop', 'value').should('contain', dateToAssert)
             // or
             cy.wrap(input).should('have.value', dateToAssert)
