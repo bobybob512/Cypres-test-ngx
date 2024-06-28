@@ -9,5 +9,7 @@ describe('Test with page objects', () => {
     it('verify navigation across the pages', () => {
         navigateTo.formLayoutsPage()
         navigateTo.datepickerPage()
+        navigateTo.smartTablePage()
+        navigateTo.toolTipPage()
     })
 })
