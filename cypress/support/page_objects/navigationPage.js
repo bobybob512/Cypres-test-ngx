@@ -33,5 +33,4 @@ export class NavigationPage{
         cy.contains('Tooltip').click()
     }
 }
-
 export const navigateTo = new NavigationPage()

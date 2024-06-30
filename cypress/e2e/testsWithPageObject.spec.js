@@ -11,5 +11,6 @@ describe('Test with page objects', () => {
         navigateTo.datepickerPage()
         navigateTo.smartTablePage()
         navigateTo.toolTipPage()
+        
     })
 })
