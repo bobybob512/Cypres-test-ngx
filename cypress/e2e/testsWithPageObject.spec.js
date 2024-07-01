@@ -16,6 +16,7 @@ describe('Test with page objects', () => {
 
     it.only('should submit Inline and Basic form and select tomorrow`s date in calendar', () => {
         navigateTo.formLayoutsPage()
-        onFormLayoutsPage.submitInlineFormWithNameAndEmail()
+        onFormLayoutsPage.submitInlineFormWithNameAndEmail('Bob', 'test@test.com')
+        onFormLayoutsPage.submitBasicFormWithEmailAndPassword('test@test.com', 'password')
     })
 })
