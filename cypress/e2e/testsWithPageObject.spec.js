@@ -1,6 +1,7 @@
 import { onDatepickerPage } from "../support/page_objects/datepickerPage"
 import { formLayoutsPage, onFormLayoutsPage } from "../support/page_objects/formLayoutsPage"
 import {  navigateTo } from "../support/page_objects/navigationPage"
+import { onSmartTablePage } from "../support/page_objects/smartTablePage"
 
 describe('Test with page objects', () => {
 
@@ -21,9 +22,16 @@ describe('Test with page objects', () => {
         onFormLayoutsPage.submitBasicFormWithEmailAndPassword('test@test.com', 'password')
     })
 
-    it.only('Chose a date from Datepicker', () => {
+    it('Chose a date from Datepicker', () => {
         navigateTo.datepickerPage()
         //onDatepickerPage.selectCommonDatePickerDateFromToday(1)
         onDatepickerPage.selectDatePickerRangeFromToday(0, 10)
+    })
+
+    it.only('Smart table', () => {
+        navigateTo.smartTablePage()
+        //onSmartTablePage.updateAgeByFirstName('John', 100)
+        //onSmartTablePage.addNewRecordWithFirstAndLastName('Bob', 'Boby')
+        onSmartTablePage.deleteRowByIndex(0)
     })
 })
